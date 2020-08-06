@@ -2,45 +2,43 @@ const fs = require('fs');
 
 const kInputFile = 'data.json';
 const kOutputFile = '../lib/ionicons.dart';
-const kStartCode = 0xe900;
 
 ///
-/// Use https://icomoon.io to generate font from svg files that in 
-/// Ionicons repo: https://github.com/ionic-team/ionicons
+/// Use https://raw.githubusercontent.com/oblador/react-native-vector-icons/
 ///
-/// data.json can be found in /src/data.json
+/// https://raw.githubusercontent.com/oblador/react-native-vector-icons/master/glyphmaps/Ionicons.json
 ///
-function parse() {
-  const data = fs.readFileSync(kInputFile, { encoding: 'utf8' });
-  const json = JSON.parse(data);
 
-  console.log(kStartCode);
-  const names = json.icons.map((v) => v.name.replace(/-/g, '_'));
-  return names;
-}
+/// Generate
+const buf = [];
+buf.push('/// Generated');
+buf.push("import 'package:flutter/material.dart';\n");
 
-function generate() {
-  const buf = [];
-  buf.push('/// Generated');
-  buf.push("import 'package:flutter/material.dart';\n");
+buf.push('class IoniconsData extends IconData {');
+buf.push('  const IoniconsData(int code)');
+buf.push('      : super(');
+buf.push('          code,');
+buf.push("          fontFamily: 'Ionicons',");
+buf.push("          fontPackage: 'ionicons',");
+buf.push('        );')
+buf.push('}\n');
 
-  buf.push('class IoniconsData extends IconData {');
-  buf.push("  const IoniconsData(int code): super(code, fontFamily: 'Ionicons');");
-  buf.push('}\n');
+buf.push('class Ionicons {');
 
-  buf.push('class Ionicons {');
+/// Parse
+const data = fs.readFileSync(kInputFile, { encoding: 'utf8' });
+const json = JSON.parse(data);
 
-  const names = parse();
-  let code = kStartCode;
-  for (const name of names) {
-    buf.push(`  static const IconData ${name} = IoniconsData(${code});`);
-    code = code + 1;
+for (const [k, v] of Object.entries(json)) {
+  if (k.includes('ios-') || k.includes('md-')) {
+    continue;
   }
-
-  buf.push('}\n');
-
-  // Write
-  fs.writeFileSync(kOutputFile, buf.join('\n'));
+  
+  const name = k.replace(/-/g, '_');
+  buf.push(`  static const IconData ${name} = IoniconsData(${v});`);
 }
 
-generate();
+buf.push('}\n');
+
+// Write
+fs.writeFileSync(kOutputFile, buf.join('\n'));
