@@ -14,6 +14,7 @@ const buf = [];
 buf.push('/// Generated');
 buf.push("import 'package:flutter/material.dart';\n");
 
+buf.push('/// Uses to generate IconData for Ionicons');
 buf.push('class IoniconsData extends IconData {');
 buf.push('  const IoniconsData(int code)');
 buf.push('      : super(');
@@ -23,6 +24,7 @@ buf.push("          fontPackage: 'ionicons',");
 buf.push('        );')
 buf.push('}\n');
 
+buf.push('/// Ionicons data, see https://ionicons.com/ for more info');
 buf.push('class Ionicons {');
 
 /// Parse
@@ -35,7 +37,8 @@ for (const [k, v] of Object.entries(json)) {
   }
   
   const name = k.replace(/-/g, '_');
-  buf.push(`  static const IconData ${name} = IoniconsData(${v});`);
+  buf.push(`  /// ${k}`);
+  buf.push(`  static const IconData ${name} = IoniconsData(${v});\n`);
 }
 
 buf.push('}\n');
