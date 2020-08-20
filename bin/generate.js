@@ -4,7 +4,7 @@ const kInputFile = 'data.json';
 const kOutputFile = '../lib/ionicons.dart';
 
 ///
-/// Use https://raw.githubusercontent.com/oblador/react-native-vector-icons/
+/// Use https://github.com/oblador/react-native-vector-icons/
 ///
 /// https://raw.githubusercontent.com/oblador/react-native-vector-icons/master/glyphmaps/Ionicons.json
 ///
