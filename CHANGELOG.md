@@ -1,11 +1,16 @@
+# 0.1.0
+
+- Ionicons v5.3.0
+- Fixed #1, #2, #3
+
 # 0.0.3
 
-* Update README
+- Update README
 
 ## 0.0.2
 
-* Add example
+- Add example
 
 ## 0.0.1
 
-* Ionicons v5.0.1
+- Ionicons v5.0.1

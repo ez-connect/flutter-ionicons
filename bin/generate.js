@@ -1,17 +1,18 @@
 const fs = require('fs');
 
-const kInputFile = 'data.json';
+const kInputFile = 'data.scss';
 const kOutputFile = '../lib/ionicons.dart';
+const kRegexSCSS = /\$icon-(.*): \"\\(.*)";/;
 
 ///
-/// Use https://github.com/oblador/react-native-vector-icons/
+/// Ionicons v5.3.0 - https://github.com/ionic-team/ionicons/releases/tag/v5.3.0
 ///
-/// https://raw.githubusercontent.com/oblador/react-native-vector-icons/master/glyphmaps/Ionicons.json
+/// Outline issues fixed by using `svg-outline-stroke` then upload to IcoMoon
 ///
 
-/// Generate
+/// Generate from SASS of IcoMoon
 const buf = [];
-buf.push('/// Generated');
+buf.push('/// Generate from SASS of IcoMoon');
 buf.push("import 'package:flutter/material.dart';\n");
 
 buf.push('/// Uses to generate IconData for Ionicons');
@@ -21,7 +22,7 @@ buf.push('      : super(');
 buf.push('          code,');
 buf.push("          fontFamily: 'Ionicons',");
 buf.push("          fontPackage: 'ionicons',");
-buf.push('        );')
+buf.push('        );');
 buf.push('}\n');
 
 buf.push('/// Ionicons data, see https://ionicons.com/ for more info');
@@ -29,19 +30,22 @@ buf.push('class Ionicons {');
 
 /// Parse
 const data = fs.readFileSync(kInputFile, { encoding: 'utf8' });
-const json = JSON.parse(data);
-
-for (const [k, v] of Object.entries(json)) {
-  if (k.includes('ios-') || k.includes('md-')) {
-    continue;
+const lines = data.split('\n');
+let counter = 0;
+for (const line of lines) {
+  const matches = line.match(kRegexSCSS);
+  if (matches && matches.length === 3) {
+    let name = matches[1];
+    buf.push(`  /// ${name}`);
+    name = name.replace(/-/g, '_');
+    const code = `0x${matches[2]}`;
+    buf.push(`  static const IconData ${name} = IoniconsData(${code});\n`);
+    counter++;
   }
-  
-  const name = k.replace(/-/g, '_');
-  buf.push(`  /// ${k}`);
-  buf.push(`  static const IconData ${name} = IoniconsData(${v});\n`);
 }
 
 buf.push('}\n');
 
 // Write
 fs.writeFileSync(kOutputFile, buf.join('\n'));
+console.log('Total:', counter);
