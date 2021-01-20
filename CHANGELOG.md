@@ -1,6 +1,6 @@
 # 0.1.0
 
-- Ionicons v5.3.0
+- Ionicons v5.3.0 with 1301 icons
 - Fixed #1, #2, #3
 
 # 0.0.3
