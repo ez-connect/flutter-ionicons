@@ -1,7 +1,7 @@
 const fs = require('fs');
 
-const kInputFile = 'data.scss';
-const kOutputFile = '../lib/ionicons.dart';
+const kInputFile = 'assets/ionicons.scss';
+const kOutputFile = 'lib/ionicons.dart';
 const kRegexSCSS = /\$icon-(.*): \"\\(.*)";/;
 
 ///
