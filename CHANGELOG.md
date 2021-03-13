@@ -1,4 +1,9 @@
+## 0.1.2
 
+### Changed
+
+- Supports `null safety`
+- Lists all items in `/example`
 
 ## 0.1.1
 

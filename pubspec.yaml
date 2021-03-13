@@ -1,10 +1,10 @@
 name: ionicons
 description: Ionicons is a completely open-source icon set with 1k3+ icons crafted for web, iOS, Android, and desktop apps. They have both Material Design and iOS versions.
-version: 0.1.1
+version: 0.1.2
 homepage: https://github.com/ez-connect/flutter-ionicons
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
