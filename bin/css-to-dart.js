@@ -62,24 +62,18 @@ for (const match of matches) {
   stream.write(`  /// ${name}\n`); // origin name
   mapping[name] = `0x${code}`;
 
-  name = name.toLowerCase();
-
-  // Specific names
-  if (name.startsWith('1') || name.startsWith('3') || name.startsWith('4')) {
-    name = `i${name}`;
-  }
-
-  name = name
-    .replaceAll('default', 'default_icon')
-    .replaceAll(' ', '_')
-    .replaceAll('.', '_')
-    .replaceAll(',', '')
-    .replaceAll('(', '')
-    .replaceAll(')', '')
-    .replaceAll('-', '')
-    .replaceAll('\+', '_plus')
-    .replaceAll('#', '_sharp')
-    .replaceAll('&', 'n');
+  name = name.toLowerCase().replaceAll('-', '_');
+  // name = name
+  //   .replaceAll('default', 'default_icon')
+  //   .replaceAll(' ', '_')
+  //   .replaceAll('.', '_')
+  //   .replaceAll(',', '')
+  //   .replaceAll('(', '')
+  //   .replaceAll(')', '')
+  //   .replaceAll('-', '')
+  //   .replaceAll('\+', '_plus')
+  //   .replaceAll('#', '_sharp')
+  //   .replaceAll('&', 'n');
 
   stream.write(`  static const ${name} = IoniconsData(0x${code});\n\n`);
 

@@ -1,6 +1,6 @@
 name: ionicons
 description: Ionicons is a completely open-source icon set with 1k3+ icons crafted for web, iOS, Android, and desktop apps. They have both Material Design and iOS versions.
-version: 0.2.0
+version: 0.2.1
 homepage: https://ionicons.ez-connect.net
 
 environment:

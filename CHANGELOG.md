@@ -1,3 +1,13 @@
+## 0.2.1
+
+### Changed
+
+- Allows search icons in the example
+
+### Fixed
+
+- Fixed a typo in icon names
+
 ## 0.2.0
 
 ### Changed

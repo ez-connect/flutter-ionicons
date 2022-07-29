@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:ionicons/ionicons.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,18 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Ionicons',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue),
       debugShowCheckedModeBanner: false,
       home: MyHomePage(),
     );
@@ -34,15 +24,13 @@ class MyApp extends StatelessWidget {
 
 /// Example page
 class MyHomePage extends StatelessWidget {
-  final outlineItems =
-      ioniconsMapping.entries.where((e) => e.key.endsWith('-outline')).toList();
-  final filledItems = ioniconsMapping.entries
-      .where((e) => !(e.key.endsWith('-outline') && e.key.endsWith('-sharp')))
-      .toList();
-  final sharpItems =
-      ioniconsMapping.entries.where((e) => e.key.endsWith('-sharp')).toList();
+  final _outlineItems = ValueNotifier<List<MapEntry<String, String>>>([]);
+  final _filledItems = ValueNotifier<List<MapEntry<String, String>>>([]);
+  final _sharpItems = ValueNotifier<List<MapEntry<String, String>>>([]);
 
-  MyHomePage({Key? key}) : super(key: key);
+  MyHomePage({Key? key}) : super(key: key) {
+    _onTextChanged(''); // trigger the search
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,16 +44,84 @@ class MyHomePage extends StatelessWidget {
             Tab(text: 'Filled'),
             Tab(text: 'Sharp'),
           ]),
+          actions: [
+            IconButton(
+              onPressed: _onPressedGitHub,
+              icon: const Icon(Ionicons.logo_github),
+            ),
+            TextButton(
+              onPressed: _onPressedPub,
+              child: const Text(
+                'v0.2.1',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
         ),
-        body: TabBarView(
+        body: Column(
           children: [
-            _ItemList(items: outlineItems),
-            _ItemList(items: filledItems),
-            _ItemList(items: sharpItems),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: TextField(
+                autofocus: true,
+                decoration: const InputDecoration(
+                  hintText: 'Search icons',
+                  prefixIcon: Padding(
+                    padding: EdgeInsets.only(left: 32, right: 16),
+                    child: Icon(Ionicons.search_outline),
+                  ),
+                ),
+                onChanged: _onTextChanged,
+              ),
+            ),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  ValueListenableBuilder<dynamic>(
+                    valueListenable: _outlineItems,
+                    builder: (context, value, child) => _ItemList(items: value),
+                  ),
+                  ValueListenableBuilder<dynamic>(
+                    valueListenable: _filledItems,
+                    builder: (context, value, child) => _ItemList(items: value),
+                  ),
+                  ValueListenableBuilder<dynamic>(
+                    valueListenable: _sharpItems,
+                    builder: (context, value, child) => _ItemList(items: value),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  /// Handle on search icons
+  void _onTextChanged(String value) {
+    final items = value.isEmpty
+        ? ioniconsMapping.entries.toList()
+        : ioniconsMapping.entries
+            .where((e) => e.key.contains(value.toLowerCase()))
+            .toList();
+
+    _outlineItems.value =
+        items.where((e) => e.key.endsWith('-outline')).toList();
+    _filledItems.value = items
+        .where((e) => !(e.key.endsWith('-outline') || e.key.endsWith('-sharp')))
+        .toList();
+    _sharpItems.value = items.where((e) => e.key.endsWith('-sharp')).toList();
+  }
+
+  /// Handle on pressed GitHub button
+  void _onPressedGitHub() {
+    launchUrlString('https://github.com/ez-connect/flutter-ionicons');
+  }
+
+  /// Handle on pressed Pub button
+  void _onPressedPub() {
+    launchUrlString('https://pub.dev/packages/ionicons');
   }
 }
 
