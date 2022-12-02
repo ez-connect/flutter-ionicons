@@ -1,3 +1,9 @@
+## 0.2.2
+
+### Fixed
+
+-   Icons not working in web [#14](https://github.com/ez-connect/flutter-ionicons/issues/14)
+
 ## 0.2.1
 
 ### Changed
