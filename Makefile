@@ -3,7 +3,7 @@
 # https://github.com/ionic-team/ionicons
 #
 
-IONICON_VERSION	?= 6.0.2
+IONICON_VERSION	?= 7.1.0
 
 # Lists all targets
 help:
@@ -24,7 +24,7 @@ init:
 
 #: Code formatting
 fmt:
-	flutter format --fix lib/
+	dart format --fix lib/
 
 #: Analyzes the project's Dart source code
 lint:
