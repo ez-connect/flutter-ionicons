@@ -1,10 +1,13 @@
 name: ionicons
-description: Ionicons is a completely open-source icon set with 1k3+ icons crafted for web, iOS, Android, and desktop apps. They have both Material Design and iOS versions.
-version: 0.2.2
-homepage: https://ionicons.ez-connect.net
+description: Ionicons is a completely open-source icon set with 1k3+ icons
+  crafted for web, iOS, Android, and desktop apps. They have both Material
+  Design and iOS versions.
+version: 0.2.3
+repository: https://github.com/ez-connect/flutter-ionicons
+homepage: https://ionicons.ez-connect.work
 
 environment:
-  sdk: ">=2.17.6 <3.0.0"
+  sdk: ^3.13.0
   flutter: ">=1.17.0"
 
 dependencies:
@@ -14,7 +17,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^6.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -28,10 +31,10 @@ flutter:
   #   - images/a_dot_ham.jpeg
   #
   # For details regarding assets in packages, see
-  # https://flutter.dev/assets-and-images/#from-packages
+  # https://flutter.dev/to/asset-from-package
   #
   # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware
+  # https://flutter.dev/to/resolution-aware-images
 
   # To add custom fonts to your package, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
@@ -44,4 +47,4 @@ flutter:
         - asset: assets/fonts/Ionicons.ttf
   #
   # For details regarding fonts in packages, see
-  # https://flutter.dev/custom-fonts/#from-packages
+  # https://flutter.dev/to/font-from-package

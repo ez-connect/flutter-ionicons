@@ -14,6 +14,5 @@ insert_final_newline = true
 [*.{json,xml,swift,gradle,arb}]
 indent_size = 4
 
-[Makefile]
-indent_style = tab
+[justfile]
 indent_size = 4
